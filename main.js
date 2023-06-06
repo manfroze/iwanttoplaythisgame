@@ -272,16 +272,6 @@ const items = {
 	},
 }
 
-var ideas = {};
-var things = {};
-var dusts = {};
-
-const itemCounter = {
-	idea: ideas,
-	thing: things,
-	dust: dusts
-}
-
 const buttons = {
 	want: {
 		label: "I want to play this game",
@@ -465,7 +455,7 @@ const buyables = {
 		name: "Unlock Alchemizer",
 		class: "unlock",
 		subclass: "submachine",
-		cost: [1000, "dusts", "purify"],
+		cost: [10000, "ideas", "recursion"],
 		machine: "reify",
 		unlocks: "alchemizer",
 	}	
@@ -514,9 +504,20 @@ const fuelCost = {
 	will: [10, "dusts", "want"],
 }
 
+var ideas = {};
+var things = {};
+var dusts = {};
+
+var itemCounter = {
+	idea: ideas,
+	thing: things,
+	dust: dusts
+}
+
 // VARIABLES //
 
 function startVar(){
+
 
 	$.each(itemCounter, function(type, types){
 		$.each(items, function(id, item){
@@ -528,10 +529,11 @@ function startVar(){
 
 	impureItems = {};
 	$.each(itemCounter, function(type, types){
-		impureItems[type] = [];
+		let word = type + 's';
+		impureItems[word] = [];
 		$.each(items, function(id, item){
 			if(item.type == "impure"){
-				impureItems[type].push(id);
+				impureItems[word].push(id);
 			}
 		});
 	});
@@ -582,7 +584,6 @@ function startVar(){
 	power = {}
 	fuelGauge = {}
 	fuelGaugeSize = {}
-
 	$.each(items, function(id){
 		if(items[id].generator){
 			power[id] = 0;
@@ -590,7 +591,6 @@ function startVar(){
 			fuelGaugeSize[id] = 1000;
 		}
 	});
-
 	power.alchemy = 1;
 
 	logCount = 0;
@@ -607,10 +607,13 @@ function startVar(){
 		power: power,
 		fuelGauge: fuelGauge,
 		fuelGaugeSize: fuelGaugeSize,
+		itemUnlock: itemUnlock,
+		itemCounter: itemCounter
 	}
 }
 
 function updateState(){
+	logCount: state.logCount;
 	machineStatus = state.machineStatus;
 	showStatus = state.showStatus;
 	buyableStatus = state.buyableStatus;
@@ -619,8 +622,10 @@ function updateState(){
 	ideas = state.ideas;
 	dusts = state.dusts;
 	power = state.power;
+	itemCounter = state.itemCounter;
 	fuelGauge = state.fuelGauge;
 	fuelGaugeSize = state.fuelGaugeSize;
+	itemUnlock = state.itemUnlock;
 }
 
 // LOCAL STORAGE //
@@ -636,9 +641,9 @@ function loadState(){
 	};
 }
 
-/*$( window ).on("unload", function() {
+$( window ).on("unload", function() {
 	updateLocalStorage();
-});*/
+});
 
 // READY //
 
@@ -944,22 +949,20 @@ function autoIncrease(){
 
 function logClear(){
 	setInterval(function(){
-		$('.item.logMessage.inactive').fadeOut();
+		$('.item.logMessage.inactive').fadeOut(300, function() { $(this).remove(); });
 	}, 10000) 
 }
 
 function impureStatus(){
-	//$('.item .button').on("click", function(){
 		$.each(impureItems, function(type, types){
 			$.each(types, function(id, item){
-				if (itemCounter[type][item] == 0){
-					$('.item.'+type+'s.'+item).fadeOut();
+				if (window[type][item] == 0){
+					$('.item.'+type+'.'+item).fadeOut();
 				} else {
-					$('.item.'+type+'s.'+item).show();	
+					$('.item.'+type+'.'+item).show();	
 				}
 			})
 		});
-	//});
 }
 
 /* ALCHEMY */
@@ -1024,9 +1027,16 @@ function mentalizeMax(){
 }
 
 function buildAllItems(){
+	itemCounter = {
+	idea: ideas,
+	thing: things,
+	dust: dusts
+	}
 	$.each(itemCounter, function(key, type){
 		$.each(type, function(id){
 			if(type[id] != 0){
+				console.log(key)
+				console.log(type)
 				itemBuild(key+'s', id);	
 			}
 		});
@@ -1037,12 +1047,7 @@ function pay(type, token, price){
 	if (window[type][token] >= price){
 		window[type][token] = window[type][token] - price;
 		updateCounter(type, token);
-		if(items[token].type == "impure"){
-			if(window[type][token] <= 0){
-				window[type][token] = 0;
-				//$('.'+type+'.'+token).remove();
-			}
-		} return true;
+		 return true;
 	} else {
 		return false;
 	}
@@ -1139,7 +1144,7 @@ function logMessageTooMany(id){
 	logCount++;
 	activeLogCounter++;
 	updateActiveLogCounter();
-	$('#log .content').prepend('<div class="logMessage '+ id +' logCount-'+logCount+' active"><span class="count">'+logCount+' </span><span class="name">'+ items[id].logTooMany+'</span></div>');
+	$('#log .content').prepend('<div class="item logMessage '+ id +' logCount-'+logCount+' active"><span class="count">'+logCount+' </span><span class="name">'+ items[id].logTooMany+'</span></div>');
 	button('.logCount-' + logCount, id, "mentalize");
 }
 
@@ -1250,9 +1255,8 @@ function button(appendTo, itemType, buttonType){
 		if(buttons[buttonType].action == "purifyMax"){
 			purifyMax();
 		}
-		impureStatus()
+		impureStatus();
 	});
-	//impureStatus();
 }
 
 function updateCounter(type, id){
