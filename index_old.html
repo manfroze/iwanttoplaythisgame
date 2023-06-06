@@ -1,0 +1,139 @@
+<html lang="en">
+<head>
+	<title>I want to play this game</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/canvas2image@1.0.5/canvas2image.min.js"></script>
+	<link rel="stylesheet" href="style.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i&display=swap" rel="stylesheet">
+</head>
+<body>
+	<div id="header">
+		<div class="button" id="want">I want to play this game</div>
+
+		<!--<div class="button" id="debugAll">DebugAll</div>-->
+	</div>
+
+	<div id="container">
+		<div id="wrapper">
+			<div id="log" class="box">
+				<div class="header"><strong>Facts</strong></div>				
+				<div class="content"></div>
+			</div> 
+			<div id="ideas" class="box">
+				<div class="header"><strong>Ideas</strong></div>
+				<div id="pure" class="content"></div>
+				<div id="impure" class="content"></div>
+			</div>
+			<div id="things" class="box">
+				<div class="header"><strong>Things</strong></div>
+				<div id="pure" class="content"></div>
+				<div id="dusts" class="content"></div>
+				<div id="impure" class="content"></div>
+			</div>
+		</div>
+		<div id="machines">
+			<div class="content">
+					<div id="desireMachineUnlock" class="machineUnlock box want">
+					<div class="title">Unlock Heart Complex</div>
+					<div class="cost"><span class="idealSubstance">100 Ideal Substance</span>, <span class="want">1000 Desire dust</span></div>
+				</div>
+				<div id="desireMachine" class="machine box want" style="display:none;">
+					<div class="title">Heart Complex</div>
+					<div class="stripContainer">
+						<div class="strip small">
+							<div id= "desireConv" class="tile small buyable mindConv"><span class="name desire">+5 Desire</span><span class="cost want">1 Desire dust</span></div>
+						</div>
+						<div class="strip">
+							<div id= "desirerer" class="tile buyable desirerer"><span class="name">Unlock Desirerer</span><span class="cost">Coming soon...</span></div>
+
+						</div>
+					</div>
+				</div>
+				
+				<div id="mindMachineUnlock" class="machineUnlock box mentalize">
+					<div class="title">Unlock Mind Machine</div>
+					<div class="cost"><span class="recursion">1000 Recursion</span>, <span class="pulverize">10 Dust dust</span></div>
+				</div>
+
+				<div id="mindMachine" class="machine box mentalize" style="display:none;">
+					<div class="title">Mind Machine</div>
+					<div class="container">
+					<div class="stripContainer">
+						<div class="strip small">
+							<div id= "mindConv" class="tile small buyable mindConv"><span class="name mind">+5 Mind</span><span class="cost mentalize">1 Mind dust</span></div>
+							<div id= "strengthConv" class="tile small buyable strengthConv"><span class="name strength">+5 Strength</span><span class="cost want">1 Desire dust</span></div>
+						</div>
+						<div class="strip">
+							<div id= "mentAllUnlock" class="tile buyable mentAllUnlock"><span class="name">Unlock MentAll</span><span class="cost mentalize">25 Mind dust</span></div>
+							<div id= "autoMindUnlock" class="tile buyable autoMindUnlock"><span class="name">Unlock AutoMind</span><span class="cost idealSubstance">75 Ideal Substance</span></div>
+							<div id= "autoStrengthUnlock" class="tile buyable autoStrengthUnlock"><span class="name">Unlock AutoStrength</span><span class="cost idealSubstance">75 Ideal Substance</span></div>
+
+							<div id= "purifierUnlock" class="tile buyable purifierUnlock"><span class="name">Unlock Purifier</span><span class="cost idealSubstance">2500 Ideal Substance</span></div>
+						</div>
+					</div>
+
+					<div id="autoMind" class="subMachine autoMind mind" style="display:none;">
+						<div class="name">AutoMind</div>
+						<div class="">
+							<div class="text">+<span class="info"></span> Mind/s</div>
+							<div class="text"><span class="fuel"></span>/<span class="gauge"></span>  Mind dust</div>
+							<div class="gaugeDraw"><div class="fuelDraw"></div></div>
+							<div class="button addFuel">Add 10 Mind dust</div>
+						</div>
+					</div>
+					<div id="autoStrength" class="subMachine autoMatter strength" style="display:none;">
+						<div class="name">AutoStrength</div>
+						<div class="">
+							<div class="text">+<span class="info"></span> Strength/s</div>
+							<div class="text"><span class="fuel"></span>/<span class="gauge"></span>  Desire dust</div>
+							<div class="gaugeDraw"><div class="fuelDraw"></div></div>
+							<div class="button addFuel">Add 10 Desire dust</div>
+						</div>
+					</div>						
+				</div>
+				</div>
+
+				<div id="matterMachineUnlock" class="machineUnlock box reify">
+					<div class="title">Unlock Matter Lab</div>
+					<div class="cost"><span class="idealSubstance">100 Ideal Substance</span>, <span class="reify">10 Material dust</span></div>
+				</div>
+				<div id="matterMachine" class="machine box reify" style="display:none;">
+					<div class="title">Matter Lab</div>
+					<div class="container">					
+					<div class="stripContainer">
+						<div class="strip small">
+							<div id= "matterConv" class="tile small buyable matterConv"><span class="name matter">+10 Matter</span><span class="cost reify">1 Material dust</span></div>
+						</div>
+						<div class="strip">
+							<div id= "reifyMaxUnlock" class="tile buyable reifyMaxUnlock"><span class="name">Unlock ReifyMax</span><span class="cost reify">10 Material dust</span></div>
+							<div id= "pulverizeMaxUnlock" class="tile buyable pulverizeMaxUnlock"><span class="name">Unlock PulverizeMax</span><span class="cost pulverize">100 Dust dust</span></div>
+							<div id= "autoMatterUnlock" class="tile buyable autoMatterUnlock"><span class="name">Unlock AutoMatter</span><span class="cost idealSubstance">75 Ideal Substance</span></div>
+
+							<div id= "alchemyUnlock" class="tile buyable alchemyMaxUnlock"><span class="name">Unlock Alchemy</span><span class="cost purity">10 Purity</span></div>
+
+						</div>
+					</div>
+					<div id="autoMatter" class="subMachine autoMatter matter" style="display:none;">
+						<div class="name">AutoMatter</div>
+						<div class="">
+							<div class="text">+<span class="info"></span> Matter/s</div>
+							<div class="text"><span class="fuel"></span>/<span class="gauge"></span>  Material dust</div>
+							<div class="gaugeDraw"><div class="fuelDraw"></div></div>
+							<div class="button addFuel">Add 10 Material dust</div>
+						</div>
+					</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+
+	</div>
+
+	<script type="text/javascript" src="main.js"></script>
+
+</body>
+</html>
