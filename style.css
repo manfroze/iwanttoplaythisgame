@@ -45,6 +45,19 @@ body {
 	margin-left: 0px;
 }
 
+.section {
+	margin-bottom: 10px;
+}
+
+.section .title {
+	color: #ccc;
+	font-size: 14px;
+	font-variant: small-caps;
+	font-weight: 700;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
 #machines {
 	width: 100%;
 	margin-left: 0px;
@@ -161,13 +174,55 @@ body {
 	gap: 10px;
 }
 
+.submachineContainer {
+	display: flex;
+	gap: 10px;
+}
+
 .submachine {
+  background-color: transparent;
+  width: 180px;
+  min-width: 180px;
+  height: 130px;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+.envelope {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
 	background-color: #FFF;
-	padding: 10px;
-	min-width: 170px;
 	border-radius: 2px;
 	outline: 1px solid;
 	outline-offset: -5px;
+}
+
+.submachine.flip .envelope {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+ 	padding: 10px;
+  width: 160px;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+.card-front {
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+.submachine .head {
+	display: flex;
+  justify-content: space-between;
 }
 
 .submachine .name {
@@ -179,17 +234,33 @@ body {
 	display: block;
 	width: 20px;
 	height: 20px;
-	position: absolute;
 	cursor: pointer;
-	font-weight: 700;
 }
 
 .submachine .collapse:after {
-	content: '-';
+	font-family: 'Material Symbols Outlined';
+	content: '\f717';
+}
+
+.submachine .settings {
+	display: block;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+}
+
+.submachine .settings:after {
+	font-family: 'Material Symbols Outlined';
+	content: '\e8b8';
+}
+
+.submachine.collapsed .settings {
+	display: none;
 }
 
 .submachine.collapsed .collapse {
 	height: 100px;
+	position: absolute;
 }
 
 .submachine.collapsed .collapse:after {
@@ -200,14 +271,29 @@ body {
 	font-size: 14px;
 }
 
+.submachine.separator .text span {
+	font-weight: 700;
+}
+
+.submachine .button {
+	margin-left: 0;
+}
+
 .submachine.collapsed {
-	min-width: 21px;
-	height: 110px;
+	width: 40px;
+	min-width: 40px;
+	height: 130px;
 	cursor: pointer;
 	position: relative;
 }
 
-.submachine.collapsed .text {
+.submachine.collapsed .card-front,
+.submachine.collapsed .card-back {
+	width: 40px;
+	min-width: 40px;
+}
+
+.submachine.collapsed .machinery > * {
 	display: none;
 }
 
@@ -216,13 +302,15 @@ body {
 }
 
 .submachine.collapsed .gaugeDraw {
+	display: block !important;
 	transform: rotateZ(-90deg);
 	pointer-events: none;
 	position: absolute;
-    width: 122px;
-    height: 33px;
-    top: 43px;
-    left: -40px;
+  width: 122px;
+  height: 32px;
+  top: 45px;
+  left: -41px;
+  border-color: transparent;
 }
 
 .submachine.collapsed .fuelDraw {
@@ -256,7 +344,7 @@ body {
 }
 
 .tile.small {
-	width: 70px;
+	width: 72px;
 	height: 30px;
 	padding: 10px;
 	cursor: pointer;
@@ -449,7 +537,7 @@ body {
 
 .shadow {
 	color: transparent;
-   	text-shadow: 0 0 1.5px rgba(10,10,10,1);
+	text-shadow: 0 0 1.5px rgba(10,10,10,1);
 }
 
 .purity {
@@ -458,17 +546,50 @@ body {
 }
 
 @keyframes glow {
-  from {
-    text-shadow: 0 0 1px gold;
-  }
-  to {
-    text-shadow: 0 0 3px gold;
-  }
+	from {
+		text-shadow: 0 0 1px gold;
+	}
+	to {
+		text-shadow: 0 0 3px gold;
+	}
 }
 
 .purify {
-	color: khaki;
+	color: Goldenrod;
 
+}
+
+.fire {
+	color: OrangeRed;
+}
+
+.water {
+	color: DeepSkyBlue;
+}
+
+.earth {
+	color: Sienna;
+}
+
+.air {
+	color: Azure;
+	text-shadow: 0 0 5px LightSkyBlue;
+}
+
+.luck {
+	color: SpringGreen;
+}
+
+.destroy {
+	color: rgb(84, 79, 72);
+}
+
+.entropy {
+	color: rgb(81, 20, 105);
+}
+
+.alchemize {
+	color: rgb(2, 35, 14)
 }
 
 .purify .button {
@@ -478,137 +599,104 @@ body {
 #pure .name,
 #pure .counter {
 	font-weight: 900;
-	}
+}
 
 /* Linear gradients for ingredient combinations */
-.friendship {
-  background: linear-gradient(DodgerBlue, Blue);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.selfDoubt {
-  background: linear-gradient(Blue, darkgrey);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
 
 .fortitude {
-  background: linear-gradient(DodgerBlue, BlueViolet);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: linear-gradient(DodgerBlue, BlueViolet);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .madness {
-  background: linear-gradient(DodgerBlue, magenta);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: linear-gradient(DodgerBlue, magenta);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .loyalty {
-  background: linear-gradient(BlueViolet, Blue);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.conviction {
-  background: linear-gradient(BlueViolet, DarkTurquoise);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.selfEsteem {
-  background: linear-gradient(DarkTurquoise, Blue);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: linear-gradient(BlueViolet, Blue);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .problemSolving {
-  background: linear-gradient(DarkTurquoise, magenta);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: linear-gradient(DarkTurquoise, magenta);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .divinity {
-  background: linear-gradient(DarkTurquoise, OliveDrab);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: linear-gradient(DarkTurquoise, OliveDrab);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .idea {
-  background: linear-gradient(CadetBlue, DarkTurquoise);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: linear-gradient(CadetBlue, DarkTurquoise);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .faith {
-  background: linear-gradient(Blue, OliveDrab);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: linear-gradient(Blue, OliveDrab);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .spark {
-  background: linear-gradient(DarkTurquoise, OliveDrab);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: linear-gradient(DarkTurquoise, OliveDrab);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .philosophy {
-  background: linear-gradient(DarkTurquoise, CadetBlue);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: linear-gradient(DarkTurquoise, CadetBlue);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .void {
-  background: linear-gradient(OliveDrab, darkgrey);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: linear-gradient(OliveDrab, darkgrey);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .creation {
-  background: linear-gradient(OliveDrab, CadetBlue);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: linear-gradient(OliveDrab, CadetBlue);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .evil {
-  background: linear-gradient(darkgrey, MediumVioletRed);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: linear-gradient(darkgrey, MediumVioletRed);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .death {
-  background: linear-gradient(darkgrey, black);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.heroism {
-  background: linear-gradient(BlueViolet, BlueViolet);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.dementia {
-  background: linear-gradient(DodgerBlue, black);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: linear-gradient(darkgrey, black);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .destruction {
-  background: linear-gradient(BlueViolet, MediumVioletRed);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: linear-gradient(BlueViolet, MediumVioletRed);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .awe {
-  background: linear-gradient(Blue, DodgerBlue);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: linear-gradient(Blue, DodgerBlue);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
-.bigBang {
-  background: linear-gradient(CadetBlue, black);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 100,
+  'GRAD' 0,
+  'opsz' 24
 }
