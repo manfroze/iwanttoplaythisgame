@@ -1,0 +1,220 @@
+/* COLORS */
+
+.want {
+	color: firebrick;
+}
+
+.reify {
+	color: forestgreen;
+}
+
+.mentalize {
+	color: navy;
+}
+
+.pulverize {
+	color: DimGray;
+}
+
+.recursion {
+	color: magenta;
+}
+
+.machineU, .technology {
+	color: Brown;
+}
+
+.unlock, .progress {
+	color: MediumSeaGreen;
+}
+
+.mind {
+	color: DodgerBlue;
+}
+
+.matter {
+	color: LimeGreen;
+}
+
+.strength {
+	color: BlueViolet;
+}
+
+.idealSubstance,
+.mentAll {
+	color: CadetBlue;
+}
+
+.respect {
+	color: Blue;
+}
+
+.will {
+	color: MediumVioletRed;
+}
+
+.thought {
+	color: DarkTurquoise;
+}
+
+.primaMateria {
+	color: OliveDrab;
+}
+
+.shadow {
+	color: transparent;
+	text-shadow: 0 0 1.5px rgba(10,10,10,1);
+}
+
+.purity {
+	color: gold;
+	animation: glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+	from {
+		text-shadow: 0 0 1px gold;
+	}
+	to {
+		text-shadow: 0 0 3px gold;
+	}
+}
+
+.purify {
+	color: Goldenrod;
+
+}
+
+.fire {
+	color: OrangeRed;
+}
+
+.water {
+	color: DeepSkyBlue;
+}
+
+.earth {
+	color: Sienna;
+}
+
+.air {
+	color: Azure;
+	text-shadow: 0 0 5px LightSkyBlue;
+}
+
+.luck {
+	color: rgb(0, 205, 103);
+}
+
+.destroy {
+	color: rgb(84, 79, 72);
+}
+
+.entropy {
+	color: rgb(81, 20, 105);
+}
+
+.alchemize {
+	color: rgb(2, 35, 14)
+}
+
+.purify .button {
+	text-shadow: none;
+}
+
+#pure .name,
+#pure .counter {
+	font-weight: 900;
+}
+
+/* Linear gradients for ingredient combinations */
+
+.fortitude {
+	background: linear-gradient(DodgerBlue, BlueViolet);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.madness {
+	background: linear-gradient(DodgerBlue, magenta);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.loyalty {
+	background: linear-gradient(BlueViolet, Blue);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.problemSolving {
+	background: linear-gradient(DarkTurquoise, magenta);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.divinity {
+	background: linear-gradient(DarkTurquoise, OliveDrab);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.idea {
+	background: linear-gradient(CadetBlue, DarkTurquoise);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.faith {
+	background: linear-gradient(Blue, OliveDrab);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.spark {
+	background: linear-gradient(DarkTurquoise, OliveDrab);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.philosophy {
+	background: linear-gradient(DarkTurquoise, CadetBlue);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.void {
+	background: radial-gradient(white 45%, black);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.creation {
+	background: linear-gradient(OliveDrab, CadetBlue);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.evil {
+	background: linear-gradient(rgb(0, 0, 0), rgb(226, 14, 84));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.death {
+	background: linear-gradient(darkgrey, black);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.destruction {
+	background: linear-gradient(BlueViolet, MediumVioletRed);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.awe {
+	background: linear-gradient(Blue, DodgerBlue);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}

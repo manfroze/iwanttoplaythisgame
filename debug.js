@@ -38,7 +38,7 @@ $(document).bind('keydown', function (event) {
 
 $(document).bind('keydown', function (event) {
 	if (event.key == "u") {
-		$('#wrapper .box').show();
+		$('#wrapper .box.main').show();
 		$('.machineUnlock').show();
 		$('#machines').show();
 		$.each(showStatus, function(id){

@@ -1,159 +1,3 @@
-// VARIABLES //
-
-function startVar(){
-
-
-	$.each(itemCounter, function(type, types){
-		$.each(items, function(id, item){
-			if(item[type]){
-				types[id] = 0
-			}
-		});
-	});
-
-	impureItems = {};
-	$.each(itemCounter, function(type, types){
-		let word = type + 's';
-		impureItems[word] = [];
-		$.each(items, function(id, item){
-			if(item.type == "impure"){
-				impureItems[word].push(id);
-			}
-		});
-	});
-
-	ideas.mind = 300;
-	ideas.strength = 300;
-	things.matter = 300;
-
-	itemUnlock = {}
-
-	$.each(itemCounter, function(type, types){
-		itemUnlock[type+'s'] = {};
-		$.each(items, function(id, item){
-			if(item[type]){
-				itemUnlock[type+'s'][id] = "locked"
-			}
-		});
-	});
-
-	activeLogCounter = 0;
-
-	showStatus = {
-		log: "locked",
-		ideas: "locked",
-		things: "locked",
-		machines: "locked"
-	}
-
-	machineStatus = {}
-	$.each(items, function(id){
-		if(items[id].machine){
-			machineStatus[id] = "locked";
-		}
-	});
-
-	buyableStatus = {}
-	$.each(buyables, function(id){
-		buyableStatus[id] = "locked";
-	})
-
-	clickerStatus = {}
-	$.each(items, function(id){
-		if(items[id].clicker){
-			clickerStatus[id] = "off";
-		}
-	});
-
-	power = {}
-	fuelGauge = {}
-	fuelGaugeSize = {}
-	$.each(items, function(id){
-		if(items[id].generator){
-			power[id] = 0;
-			fuelGauge[id] = 0;
-			fuelGaugeSize[id] = 1000;
-		}
-	});
-	power.alchemy = 1;
-
-	logCount = 0;
-
-	state = {
-		logCount: logCount,
-		ideas: ideas,
-		things: things,
-		dusts: dusts,
-		machineStatus: machineStatus,
-		showStatus: showStatus,
-		clickerStatus: clickerStatus,
-		buyableStatus: buyableStatus,
-		power: power,
-		fuelGauge: fuelGauge,
-		fuelGaugeSize: fuelGaugeSize,
-		itemUnlock: itemUnlock,
-		itemCounter: itemCounter
-	}
-}
-
-function updateState(){
-	logCount: state.logCount;
-	machineStatus = state.machineStatus;
-	showStatus = state.showStatus;
-	buyableStatus = state.buyableStatus;
-	clickerStatus = state.clickerStatus;
-	things = state.things;
-	ideas = state.ideas;
-	dusts = state.dusts;
-	power = state.power;
-	itemCounter = state.itemCounter;
-	fuelGauge = state.fuelGauge;
-	fuelGaugeSize = state.fuelGaugeSize;
-	itemUnlock = state.itemUnlock;
-}
-
-// LOCAL STORAGE //
-
-function updateLocalStorage(){
-	localStorage.setItem('gameState', JSON.stringify(state));
-}
-
-function loadState(){
-	if (localStorage.getItem('gameState')) {
-		state = JSON.parse(localStorage.getItem('gameState'))
-		updateState();
-	};
-}
-
-/*$( window ).on("unload", function() {
-	updateLocalStorage();
-});*/
-
-// READY //
-
-$( document ).ready(function() {
-	startup();
-});
-
-function startup(){
-	loop();
-	startVar();
-	loadState();
-	show();
-	buildMachines();
-	buildSubMachines();
-	buildAllItems();
-	buildBuyables();
-	button("#header", null, "want");
-	buyablesClick();
-	machineUnlockClick();
-	powerStart();
-	clickStatus();
-	clickerStart();
-	clickStatus();
-	impureStatus();
-}
-
 function powerStart() {
 	$.each(power, function(token){
 		updatePowerCounter(token);
@@ -293,9 +137,9 @@ function machineUnlockClick(){
 	function show(){
 		$.each(showStatus, function(id){
 			if(showStatus[id] == "unlocked"){
-				$('#'+id).show();
+				$(`#${id}.main`).show();
 	} else {
-		$('#'+id).hide();
+		$(`#${id}.main`).hide();
 	}
 });
 	}
@@ -305,32 +149,32 @@ function machineUnlockClick(){
 			if (buyableStatus[id] == "unlocked"){
 				$('.buyable.'+id).hide();
 		if (id == "mentAllUnlock"){
-			button("#log .header", null, "mentAll")
+			button("#log .header .buttons", null, "mentAll")
 			$(".button.mentAll").append('<span class="counter"> (<span class="number">'+activeLogCounter+'</span>)</span>')
 		}
 		if (id == "reifyMaxUnlock"){
-			button("#ideas .header", null, "reifyMax")
+			button("#ideas .header .buttons", null, "reifyMax")
 		}
 		if (id == "pulverizeMaxUnlock"){
-			button("#things .header", null, "pulverizeMax")
+			button("#things .header .buttons", null, "pulverizeMax")
 		}
 		if (id == "mentalizeMaxUnlock"){
-			button("#log .header", null, "mentalizeMax")
+			button("#log .header .buttons", null, "mentalizeMax")
 		}
 		if (id == "purifyMaxUnlock"){
-			button("#ideas .header", null, "purifyMax")
+			button("#ideas .header .buttons", null, "purifyMax")
 		}
 		if (id == "autoMentalizeUnlock"){
-			clicker("#log .header", "autoMentalize", "mentalize")
+			clicker("#log .header .buttons", "autoMentalize", "mentalize")
 		}
 		if (id == "autoReifyUnlock"){
-			clicker("#ideas .header", "autoReify", "reify")
+			clicker("#ideas .header .buttons", "autoReify", "reify")
 		}	
 		if (id == "autoPurifyUnlock"){
-			clicker("#ideas .header", "autoPurify", "purify")
+			clicker("#ideas .header .buttons", "autoPurify", "purify")
 		}	
 		if (id == "autoPulverizeUnlock"){
-			clicker("#things .header", "autoPulverize", "pulverize")
+			clicker("#things .header .buttons", "autoPulverize", "pulverize")
 		}			
 
 		if(buyables[id].subclass == "submachine"){
@@ -387,23 +231,24 @@ function buildSubMachines(){
 		token = subMachines[sub].machine;
 		$('.machine.'+token+' .subMachineContainer').append(`
 			<div id="${sub}" class="subMachine ${sub} ${subMachines[sub].token}" style="display:none;">
-			<div class="envelope">
-			<div class="card-front">
-			<div class="head">
-			<div class="collapse"></div>
-			<div class="name">${subMachines[sub].name}</div>
-			<div class="settings"></div>
-			</div>
-			<div class="machinery"></div>
-			</div>
-			<div class="card-back">
-			<div class="head">
-			<div class=""></div>
-			<div class="name">${subMachines[sub].name}</div>
-			<div class="settings"></div>
-			</div>
-			</div>
-			</div>
+				<div class="envelope">
+					<div class="card-front">
+						<div class="head">
+							<div class="collapse"></div>
+							<div class="name">${subMachines[sub].name}</div>
+							<div class="settings"></div>
+						</div>
+						<div class="machinery"></div>
+					</div>
+					<div class="card-back">
+						<div class="head">
+							<div class=""></div>
+							<div class="name">${subMachines[sub].name}</div>
+							<div class="settings"></div>
+						</div>
+						<div class="desc text">${subMachines[sub].desc}</div>
+					</div>
+					</div>
 			</div>
 			`);
 
@@ -416,8 +261,8 @@ function buildSubMachines(){
 
 		} else if(subMachines[sub].class == "alchemizer") {
 			$(`.subMachine#${sub} .machinery`).append('<div class="selectors"><select id="selector1" class="selector"></select> + <select id="selector2" class="selector"></select></div><div id="result">???</div><div id="alchemize" class="button"><span id="text">Can\'t Create</span><span id="alchemyDust"></span></div>');
-			populateSelector(`#${sub} #selector1`, token);
-			populateSelector(`#${sub} #selector2`, token);
+			populateSelector(`#${sub} #selector1`, sub);
+			populateSelector(`#${sub} #selector2`, sub);
 			$( ".selector" ).on( "change", function() {
 				let rec = recipe($(`#${sub} #selector1`).val(), $(`#${sub} #selector2`).val());
 				if(rec){
@@ -447,11 +292,10 @@ function buildSubMachines(){
 			})
 
 		} else if(subMachines[sub].class == "destructor") {
-			console.log('dest')
 			$(`.subMachine#${sub} .machinery`).append(`
 			<div class="selectors text">Destroy 1 <select id="selector" class="selector"></select></div><br/>
 			<div id="destroy" class="button"><span id="text">Destroy</span></div>`);
-			populateSelector('#selector', "want");
+			populateSelector('#selector', "all");
 
 			$('#destroy').on("click", function(){
 				destroy($(`#${sub} #selector`).val());
@@ -473,14 +317,19 @@ $( "#wrapper" ).on( "mouseover", function() {
 function populateSelector(selector, kind){
 	$.each(itemCounter, function(type){
 		$.each(items, function(id, item) {
-			if(kind == "mentalize" && item.type == "pure" && item.subtype != "alchemified" && item.idea){
+			if(kind == "alcheminder" && item[type] && item.type == "pure" && item.subtype != "alchemified" && item.idea){
 				$(selector).append($("<option /> ").val(id).text(item[type]));
-				console.log(`${id} ${item}`)
 			}
-			if(kind == "reify" && item[type] && item.type == "pure" && item.subtype != "alchemified" && item.thing){
+			if(kind == "alchematter" && item[type] && item.type == "pure" && item.subtype != "alchemified" && item.thing){
 				$(selector).append($("<option />").val(id).text(item[type]));
 			}
-			if(kind == "want" && item[type] && item.type == "pure" && item.subtype != "alchemified"){
+			if(kind == "alchemizer" && item[type] && item.type == "pure" && item.subtype != "alchemified"){
+				$(selector).append($("<option />").val(id).text(item[type]));
+			}
+			if(kind == "alchemaxer" && item[type] && item.type == "pure" && item.subtype == "alchemified"){
+				$(selector).append($("<option />").val(id).text(item[type]));
+			}
+			if(kind == "all" && item[type] && item.type == "pure"){
 				$(selector).append($("<option />").val(id).text(item[type]));
 			}
 		});
@@ -721,32 +570,32 @@ function buyable(id){
 			}
 
 			if (id == "mentAllUnlock"){
-				button("#log .header", null, "mentAll")
+				button("#log .header .buttons", null, "mentAll")
 				$(".button.mentAll").append('<span class="counter"> (<span class="number">'+activeLogCounter+'</span>)</span>')
 			}
 			if (id == "reifyMaxUnlock"){
-				button("#ideas .header", null, "reifyMax")
+				button("#ideas .header .buttons", null, "reifyMax")
 			}
 			if (id == "pulverizeMaxUnlock"){
-				button("#things .header", null, "pulverizeMax")
+				button("#things .header .buttons", null, "pulverizeMax")
 			}
 			if (id == "mentalizeMaxUnlock"){
-				button("#log .header", null, "mentalizeMax")
+				button("#log .header .buttons", null, "mentalizeMax")
 			}
 			if (id == "purifyMaxUnlock"){
-				button("#ideas .header", null, "purifyMax")
+				button("#ideas .header .buttons", null, "purifyMax")
 			}
 			if (id == "autoMentalizeUnlock"){
-				clicker("#log .header", "autoMentalize", "mentalize")
+				clicker("#log .header .buttons", "autoMentalize", "mentalize")
 			}
 			if (id == "autoPurifyUnlock"){
-				clicker("#ideas .header", "autoPurify", "purify")
+				clicker("#ideas .header .buttons", "autoPurify", "purify")
 			}	
 			if (id == "autoReifyUnlock"){
-				clicker("#ideas .header", "autoReify", "reify")
+				clicker("#ideas .header .buttons", "autoReify", "reify")
 			}	
 			if (id == "autoPulverizeUnlock"){
-				clicker("#things .header", "autoPulverize", "pulverize")
+				clicker("#things .header .buttons", "autoPulverize", "pulverize")
 			}	
 
 		} else if (buyables[id].class == "conv"){

@@ -1,7 +1,7 @@
 const items = {
 	want: {
 		idea: "The idea of wanting to play this game",
-		thing: "The material reification of the act of wanting to play this game",
+		thing: "The material reification of the idea of wanting to play this game",
 		dust: "Willing dust",
 		machineCostA: [10, "ideas", "will"],
 		machineCostB: [25, "dusts", "want"],		
@@ -11,7 +11,7 @@ const items = {
 	},
 	mentalize: {
 		idea: "The idea of mentalizing something",
-		thing: "The material reification of the act of mentalizing",
+		thing: "The material reification of the idea of mentalizing",
 		dust: "Mental dust",
 		machine: "Mind machine",
 		machineCostA: [1000, "ideas", "recursion"],
@@ -23,7 +23,7 @@ const items = {
 	},
 	reify: {
 		idea: "The idea of reifying something",
-		thing: "The material reification of the act of reifying",
+		thing: "The material reification of the idea of reifying",
 		dust: "Material dust",
 		machineCostA: [25, "ideas", "idealSubstance"],
 		machineCostB: [10, "dusts", "pulverize"],
@@ -35,7 +35,7 @@ const items = {
 	},
 	pulverize: {
 		idea: "The idea of pulverizing something",
-		thing: "The material reification of the act of pulverizing",
+		thing: "The material reification of the idea of pulverizing",
 		dust: "Dust dust",
 		type: "impure",
 		purified: "shadow",
@@ -43,7 +43,7 @@ const items = {
 	},
 	purify: {
 		idea: "The idea of purifying something",
-		thing: "The material reification of the act of purifying",
+		thing: "The material reification of the idea of purifying",
 		dust: "Pure dust",
 		type: "impure",
 		purified: "purity",
@@ -51,21 +51,21 @@ const items = {
 	},
 	alchemize: {
 		idea: "The idea of alchemizing something",
-		thing: "The material reification of the act of alchemizing",
+		thing: "The material reification of the idea of alchemizing",
 		dust: "Alchemic dust",
 		type: "impure",
 		purified: "primaMateria",
 	},
 	destroy: {
 		idea: "The idea of destroying something",
-		thing: "The material reification of the act of destroying",
+		thing: "The material reification of the idea of destroying",
 		dust: "Entropic dust",
 		type: "impure",
 		purified: "entropy",
 	},
 	separate: {
 		idea: "The idea of separating matter into its four components",
-		thing: "The material reification of the act of separating",
+		thing: "The material reification of the idea of separating",
 		dust: "Philosopher's dust",
 		type: "impure",
 		purified: "primaMateria",
@@ -434,6 +434,14 @@ const buyables = {
 		machine: "mentalize",
 		unlocks: "autoStrength",
 	},
+	purifierUnlock: {
+		name: "Unlock Purifier",
+		cost: [250, "ideas", "idealSubstance"],
+		class: "unlock",
+		subclass: "submachine",
+		machine: "mentalize",
+		unlocks: "purifier",
+	},
 	autoWillUnlock: {
 		name: "Unlock WillGen",
 		cost: [40, "dusts", "want"],
@@ -446,7 +454,7 @@ const buyables = {
 		name: "Unlock PurifyMax",
 		class: "unlock",
 		subclass: "button",
-		cost: [250, "ideas", "idealSubstance"],
+		cost: [250, "ideas", "purity"],
 		machine: "mentalize",
 	},	
 	reifyMaxUnlock: {
@@ -530,6 +538,14 @@ const buyables = {
 		machine: "want",
 		unlocks: "alchemizer",
 	},
+	alchemaxUnlock: {
+		name: "Unlock Alchemaxer",
+		class: "unlock",
+		subclass: "submachine",
+		cost: [10000000, "ideas", "recursion"],
+		machine: "want",
+		unlocks: "alchemaxer",
+	},
 	separatorUnlock: {
 		name: "Unlock Separator",
 		class: "unlock",
@@ -551,14 +567,23 @@ const buyables = {
 		class: "unlock",
 		subclass: "submachine",
 		cost: [100, "ideas", "fortitude"],
-		machine: "reify",
+		machine: "mentalize",
 		unlocks: "empowerer",
 	}			
 }
 
 const subMachines = {
+	purifier: {
+		name: "Purifier",
+		desc: "Purify impure ideas.",
+		machine: "mentalize",
+		type: "idea",
+		token: "mind",
+		class: "purifier"
+	},
 	autoMind: {
 		name: "MindGen",
+		desc: "Generate Mind.",
 		machine: "mentalize",
 		type: "idea",
 		token: "mind",
@@ -566,6 +591,7 @@ const subMachines = {
 	},
 	autoMatter: {
 		name: "MatterGen",
+		desc: "Generate Matter.",
 		machine: "reify",
 		type: "thing",
 		token: "matter",
@@ -573,6 +599,7 @@ const subMachines = {
 	},
 	autoStrength: {
 		name: "StrengthGen",
+		desc: "Generate Strength.",
 		machine: "mentalize",
 		type: "idea",
 		token: "strength",
@@ -580,6 +607,7 @@ const subMachines = {
 	},
 	autoWill: {
 		name: "WillGen",
+		desc: "Generate Will.",
 		machine: "want",
 		type: "idea",
 		token: "will",
@@ -587,32 +615,44 @@ const subMachines = {
 	},
 	alcheminder: {
 		name: "Alcheminder",
+		desc: "Alchemize ideas.",
 		machine: "mentalize",
 		class: "alchemizer"	
 	},
 	alchematter: {
 		name: "Alchematter",
+		desc: "Alchemize things.",
 		machine: "reify",
 		class: "alchemizer"	
 	},
 	alchemizer: {
 		name: "Alchemizer",
+		desc: "Alchemize ideas and things.",
+		machine: "want",
+		class: "alchemizer"	
+	},
+	alchemaxer: {
+		name: "Alchemaxer",
+		desc: "Alchemize stuff made with alchemy.",
 		machine: "want",
 		class: "alchemizer"	
 	},
 	separator: {
 		name: "Separator",
+		desc: "Separate Matter into its four components.",
 		machine: "reify",
 		class: "separator"	
 	},
 	destructor: {
 		name: "Destructor",
+		desc: "Destroy anything.",
 		machine: "reify",
 		class: "destructor"	
 	},
 	empowerer: {
 		name: "Empowerer",
-		machine: "reify",
+		desc: "Empower stuff.",
+		machine: "mentalize",
 		class: ""	
 	},
 }
