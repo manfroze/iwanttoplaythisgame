@@ -230,7 +230,7 @@ function buildSubMachines(){
 	$.each(subMachines, function(sub){
 		token = subMachines[sub].machine;
 		$('.machine.'+token+' .subMachineContainer').append(`
-			<div id="${sub}" class="subMachine ${sub} ${subMachines[sub].token}" style="display:none;">
+			<div id="${sub}" class="subMachine ${sub} ${subMachines[sub].token} ${subMachines[sub].class}" style="display:none;">
 				<div class="envelope">
 					<div class="card-front">
 						<div class="head">
@@ -259,7 +259,7 @@ function buildSubMachines(){
 			<div class="gaugeDraw"><div class="fuelDraw"></div></div>
 			<div class="button addFuel ${fuelCost[subMachines[sub].token][2]}">Add ${fuelCost[subMachines[sub].token][0]} ${items[fuelCost[subMachines[sub].token][2]][fuelCost[subMachines[sub].token][1].slice(0, -1)]}</div>`);
 
-		} else if(subMachines[sub].class == "alchemizer") {
+		} else if(subMachines[sub].class == "alchemy") {
 			$(`.subMachine#${sub} .machinery`).append('<div class="selectors"><select id="selector1" class="selector"></select> + <select id="selector2" class="selector"></select></div><div id="result">???</div><div id="alchemize" class="button"><span id="text">Can\'t Create</span><span id="alchemyDust"></span></div>');
 			populateSelector(`#${sub} #selector1`, sub);
 			populateSelector(`#${sub} #selector2`, sub);

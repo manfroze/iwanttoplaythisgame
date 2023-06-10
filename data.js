@@ -617,25 +617,25 @@ const subMachines = {
 		name: "Alcheminder",
 		desc: "Alchemize ideas.",
 		machine: "mentalize",
-		class: "alchemizer"	
+		class: "alchemy"	
 	},
 	alchematter: {
 		name: "Alchematter",
 		desc: "Alchemize things.",
 		machine: "reify",
-		class: "alchemizer"	
+		class: "alchemy"	
 	},
 	alchemizer: {
 		name: "Alchemizer",
 		desc: "Alchemize ideas and things.",
 		machine: "want",
-		class: "alchemizer"	
+		class: "alchemy"	
 	},
 	alchemaxer: {
 		name: "Alchemaxer",
 		desc: "Alchemize stuff made with alchemy.",
 		machine: "want",
-		class: "alchemizer"	
+		class: "alchemy"	
 	},
 	separator: {
 		name: "Separator",

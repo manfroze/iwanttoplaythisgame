@@ -183,6 +183,18 @@ body {
 	background-color: #eee;
 }
 
+.infobox .title {
+	font-weight: 700;
+}
+
+.infobox .infosection {
+	margin-bottom: 15px;
+}
+
+.infobox .infosection span {
+	font-weight: 700;
+}
+
 .box .header .buttons {
 	display: flex;
 	gap: 5px;
